@@ -78,7 +78,7 @@ data CToken = CTokLParen   !PosLength            -- `('
             | CTokAtomic   !PosLength            -- `_Atomic'
             | CTokAuto     !PosLength            -- `auto'
             | CTokBreak    !PosLength            -- `break'
-            | CTokBool     !PosLength            -- `_Bool'
+            | CTokBoool     !PosLength            -- `_Bool'
             | CTokCase     !PosLength            -- `case'
             | CTokChar     !PosLength            -- `char'
             | CTokConst    !PosLength            -- `const'
@@ -101,6 +101,7 @@ data CToken = CTokLParen   !PosLength            -- `('
                                                 -- (or `__inline',
                                                 -- `__inline__')
             | CTokInt      !PosLength            -- `int'
+            | CTokBool     !PosLength            -- `bool'
             | CTokInt128   !PosLength            -- `__int128`
             | CTokLong     !PosLength            -- `long'
             | CTokLabel    !PosLength            -- `__label__
@@ -231,6 +232,7 @@ posLenOfTok (CTokFor      pos  ) = pos
 posLenOfTok (CTokGeneric  pos  ) = pos
 posLenOfTok (CTokGoto     pos  ) = pos
 posLenOfTok (CTokInt      pos  ) = pos
+posLenOfTok (CTokBool     pos  ) = pos
 posLenOfTok (CTokInt128   pos  ) = pos
 posLenOfTok (CTokInline   pos  ) = pos
 posLenOfTok (CTokIf       pos  ) = pos
@@ -341,6 +343,7 @@ instance Show CToken where
   showsPrec _ (CTokIf       _  ) = showString "if"
   showsPrec _ (CTokInline   _  ) = showString "inline"
   showsPrec _ (CTokInt      _  ) = showString "int"
+  showsPrec _ (CTokBool     _  ) = showString "bool"
   showsPrec _ (CTokInt128   _  ) = showString "__int128"
   showsPrec _ (CTokLong     _  ) = showString "long"
   showsPrec _ (CTokLabel    _  ) = showString "__label__"

@@ -214,6 +214,7 @@ goto		{ CTokGoto	_ }
 if		{ CTokIf	_ }
 inline		{ CTokInline	_ }
 int		{ CTokInt	_ }
+"bool"		{ CTokBool	_ }
 "__int128"      { CTokInt128    _ }
 long		{ CTokLong	_ }
 "__label__"	{ CTokLabel	_ }
@@ -872,6 +873,7 @@ basic_type_name
   | char			{% withNodeInfo $1 $ CCharType }
   | short			{% withNodeInfo $1 $ CShortType }
   | int				{% withNodeInfo $1 $ CIntType }
+  | "bool"		{% withNodeInfo $1 $ CBoolType }
   | long			{% withNodeInfo $1 $ CLongType }
   | float			{% withNodeInfo $1 $ CFloatType }
   | double			{% withNodeInfo $1 $ CDoubleType }

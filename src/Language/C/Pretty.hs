@@ -25,6 +25,7 @@ import Debug.Trace {- for warnings -}
 import Prelude hiding ((<>))
 
 import Language.C.Data
+import Language.C.Data.Ident
 import Language.C.Syntax
 
 -- | A class of types which can be pretty printed
@@ -243,10 +244,11 @@ instance Pretty CTypeSpec where
     pretty (CCharType _)        = text "char"
     pretty (CShortType _)       = text "short"
     pretty (CIntType _)         = text "int"
+    pretty (CBoolType _)         = text "bool"
     pretty (CLongType _)        = text "long"
     pretty (CFloatType _)       = text "float"
     pretty (CFloatNType n x _)  = text "_Float" <> text (show n) <>
-                                  (if x then text "x" else empty) 
+                                  (if x then text "x" else empty)
     pretty (CDoubleType _)      = text "double"
     pretty (CSignedType _)      = text "signed"
     pretty (CUnsigType _)       = text "unsigned"
@@ -432,6 +434,8 @@ instance Pretty CExpr where
     prettyPrec p (CMember expr ident deref _) =
         parenPrec p 26 $ prettyPrec 26 expr
                        <> text (if deref then "->" else ".") <> identP ident
+    prettyPrec _p (CVar ident@(Ident "toInt" h n) _) = text "int"
+    prettyPrec _p (CVar ident@(Ident "toFloat" h n) _) = text "float"
     prettyPrec _p (CVar ident _) = identP ident
     prettyPrec _p (CConst constant) = pretty constant
     prettyPrec _p (CCompoundLit decl initl _) =
